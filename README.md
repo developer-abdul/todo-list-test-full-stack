@@ -26,10 +26,10 @@ If you feel I need to work on any more improvement. Please do let me know.
 
 ## Instructions
 
-It is available inside the project folder
+Available inside the project folder seperately
 
-todo-list-next - Frontend
+todo-list-next - Frontend Project
 
-todo-list-nest - Backend
+todo-list-nest - Backend Project
 
 
