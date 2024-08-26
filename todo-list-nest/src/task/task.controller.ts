@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   InternalServerErrorException,
+  Query,
 } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -25,8 +26,8 @@ export class TaskController {
   }
 
   @Get()
-  findAll() {
-    return this.taskService.findAll();
+  findAll(@Query('search') searchTaskName: string) {
+    return this.taskService.findAll(searchTaskName);
   }
 
   @Get(':id')

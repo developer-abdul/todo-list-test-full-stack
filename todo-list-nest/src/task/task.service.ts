@@ -23,7 +23,12 @@ export class TaskService {
     return this.tasks;
   }
 
-  findAll() {
+  findAll(taskName?: string) {
+    if (taskName) {
+      return this.tasks.filter((task) =>
+        task.title.toLocaleLowerCase().startsWith(taskName.toLowerCase()),
+      );
+    }
     return this.tasks;
   }
 

@@ -13,8 +13,9 @@ export default function Home() {
 	const [errMsg, setErrMsg] = useState('');
 	const [isLoading, setIsLoading] = useState(true);
 
-	const getTaskList = async () => {
-		const taskApiUrl = `${process.env.NEXT_PUBLIC_API_URL}/task`;
+	const getTaskList = async (searchTaskName?: string) => {
+		const searchQuery = searchTaskName ? `?search=${searchTaskName}` : '';
+		const taskApiUrl = `${process.env.NEXT_PUBLIC_API_URL}/task${searchQuery}`;
 		const result: ITask[] = await fetch(`${taskApiUrl}`).then((res) =>
 			res.json()
 		);
@@ -33,18 +34,8 @@ export default function Home() {
 
 	const handleSearchFilterTasks = async (searchText: string) => {
 		setSearchText(searchText);
-		const taskList = await getTaskList();
-		if (!searchText) {
-			setTasks(taskList);
-			return;
-		}
-
-		// Filter the tasks by search text
-		const filteredTasks = taskList.filter((tasks) => {
-			return tasks?.title.toLowerCase().startsWith(searchText.toLowerCase());
-		});
-
-		setTasks(filteredTasks);
+		const taskList = await getTaskList(searchText);
+		setTasks(taskList);
 	};
 
 	const handleOnTaskStatusUpdate = async (
@@ -94,7 +85,7 @@ export default function Home() {
 				} else {
 					setSucMsg('Task added successfully');
 					taskInputRef.current!.value = '';
-					taskInputRef.current?.focus()
+					taskInputRef.current?.focus();
 					handleSearchFilterTasks(searchText);
 				}
 			});
